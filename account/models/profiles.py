@@ -63,7 +63,7 @@ class CoachProfile(BaseProfile):
 class OrganizerProfile(BaseProfile):
     class Meta:
         verbose_name = "Профиль организатора"
-        verbose_name = "Профили организаторов"
+        verbose_name_plural = "Профили организаторов"
 
     user = models.OneToOneField(
         "account.User",
