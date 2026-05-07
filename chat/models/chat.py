@@ -20,7 +20,7 @@ class GameChatRoom(UUIDTimeBaseModel):
 
     def __str__(self):
         return f"Чат игры: {self.game.title}"
-    
+
 
 class ChatMembership(IDTimeBaseModel):
     class Meta:
@@ -45,13 +45,13 @@ class ChatMembership(IDTimeBaseModel):
     )
     last_read_at = models.DateTimeField(
         "Послднее прочтение",
-        default=timezone.now(),
+        # default=timezone.now(),
     )
     is_muted = models.BooleanField(
         "Заглушен",
         default=False,
     )
-    #TODO: подумать над role в чате???
+    # TODO: подумать над role в чате???
 
     def __str__(self):
         return f"{self.user.email} в {self.room}"
@@ -61,7 +61,7 @@ class ChatMessage(UUIDTimeBaseModel):
     class Meta:
         verbose_name = "Сообщение чата"
         verbose_name_plural = "Сообщения чата"
-    
+
     room = models.ForeignKey(
         "chat.GameChatRoom",
         on_delete=models.CASCADE,
