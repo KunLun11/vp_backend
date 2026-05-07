@@ -107,14 +107,25 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": env.str("DB_ENGINE", "django.db.backends.postgresql"),
+#         "NAME": env.str("DB_NAME", "volley_pro"),
+#         "USER": env.str("DB_USER", "postgres"),
+#         "PASSWORD": env.str("DB_PASSWORD", "postgres"),
+#         "HOST": env.str("DB_HOST", "localhost"),
+#         "PORT": env.str("DB_PORT", "5432"),
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": env.str("DB_ENGINE", "django.db.backends.postgresql"),
-        "NAME": env.str("DB_NAME", "volley_pro"),
-        "USER": env.str("DB_USER", "postgres"),
-        "PASSWORD": env.str("DB_PASSWORD", "postgres"),
-        "HOST": env.str("DB_HOST", "localhost"),
-        "PORT": env.str("DB_PORT", "5432"),
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "volley_pro",
+        "USER": "postgres",
+        "PASSWORD": "postgres",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
@@ -131,11 +142,11 @@ CHANNEL_LAYERS = {
 # REDIS
 REDIS_HOST = env.str("REDIS_HOST", "localhost")
 REDIS_PORT = env.str("REDIS_PORT", "6379")
-REDIS_URL = env.str("REDIST_URL", default=f"redis://{REDIS_HOST}{REDIS_PORT}")
+REDIS_URL = env.str("REDIS_URL", default=f"redis://{REDIS_HOST}:{REDIS_PORT}")
 
 # CELERY
 CELERY_BROKER_URL = env.str("CELERY_BROKER_URL", default=f"{REDIS_URL}/0")
-CELERY_RESULT_URL = env.str("CELERY_RESULT_URL", default=f"{REDIS_URL}/0")
+CELERY_RESULT_BACKEND = env.str("CELERY_RESULT_BACKEND", default=f"{REDIS_URL}/0")
 
 # EMAIL
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -153,7 +164,7 @@ SERVER_EMAIL = EMAIL_HOST_USER
 # CLICKHOUSE
 CLICKHOUSE_HOST = env.str("CLICKHOUSE_HOST", default="localhost")
 CLICKHOUSE_PORT = env.str("CLICKHOUSE_PORT", default="8123")
-CLICKHOUSE_DATABASE = env.str("CLICKHOUSE_DATABASE", default="habit_tracker")
+CLICKHOUSE_DATABASE = env.str("CLICKHOUSE_DATABASE", default="volley_pro")
 CLICKHOUSE_USER = env.str("CLICKHOUSE_USER", default="default")
 CLICKHOUSE_PASSWORD = env.str("CLICKHOUSE_PASSWORD")
 
