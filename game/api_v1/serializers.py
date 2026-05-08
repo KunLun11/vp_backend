@@ -2,6 +2,7 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 from account.models.profiles import OrganizerProfile, PlayerProfile
+from config.core.enums.games import ParticipantStatus
 from etc.models.location import Location
 from game.bl.organizers import GameOrganizerService
 from game.bl.players import GamePlayerService
@@ -58,6 +59,7 @@ class GameListSerializer(serializers.ModelSerializer):
 
 class GameDetailSerializer(GameListSerializer):
     organizer = OrganizerShortSerializer(read_only=True)
+    is_participant = serializers.SerializerMethodField()
 
     class Meta(GameListSerializer.Meta):
         fields = GameListSerializer.Meta.fields + [
@@ -67,7 +69,21 @@ class GameDetailSerializer(GameListSerializer):
             "elo_rating_change",
             "created_at",
             "updated_at",
+            "is_participant",
         ]
+
+    def get_is_participant(self, obj):
+        request = self.context.get("request")
+        if not request or not request.user.is_authenticated:
+            return False
+        try:
+            return GameParticipant.objects.filter(
+                game=obj,
+                player__user=request.user,
+                status__in=[ParticipantStatus.registered, ParticipantStatus.confirmed],
+            ).exists()
+        except PlayerProfile.DoesNotExist:
+            return False
 
 
 class CreateGameSerializer(serializers.ModelSerializer):
@@ -172,3 +188,12 @@ class GameParticipantSerializer(serializers.ModelSerializer):
     class Meta:
         model = GameParticipant
         fields = ["id", "game", "player", "status", "status_display", "registered_at", "cancelled_at", "checked_in_at"]
+
+
+class MyGameParticipantSerializer(serializers.ModelSerializer):
+    game = GameDetailSerializer(read_only=True)
+    participant_id = serializers.IntegerField(source="id", read_only=True)
+
+    class Meta:
+        model = GameParticipant
+        fields = ["participant_id", "game", "status", "registered_at"]

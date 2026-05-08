@@ -7,7 +7,7 @@ from chat.models import ChatMembership, ChatMessage, GameChatRoom
 class UserShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "email", "role"]
+        fields = ["uuid", "email", "role"]
 
 
 class ChatMemberSerializer(serializers.ModelSerializer):

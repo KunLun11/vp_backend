@@ -17,6 +17,7 @@ from game.api_v1.serializers import (
     GameDetailSerializer,
     GameListSerializer,
     GameParticipantSerializer,
+    MyGameParticipantSerializer,
     NoShowSerializer,
     PublishGameSerializer,
     RegisterOnGameSerializer,
@@ -178,15 +179,8 @@ class GameViewSet(
             .filter(player__user=request.user)
             .order_by("-registered_at")
         )
-        data = [
-            {
-                "game": GameListSerializer(participant.game).data,
-                "status": participant.status,
-                "participant_id": participant.id,
-            }
-            for participant in participants
-        ]
-        return Response(data)
+        serializer = MyGameParticipantSerializer(participants, many=True)
+        return Response(serializer.data)
 
     @extend_schema(
         summary="Мои организованные игры",

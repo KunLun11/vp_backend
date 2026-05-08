@@ -45,7 +45,7 @@ class ChatMembership(IDTimeBaseModel):
     )
     last_read_at = models.DateTimeField(
         "Послднее прочтение",
-        # default=timezone.now(),
+        default=timezone.now,
     )
     is_muted = models.BooleanField(
         "Заглушен",
