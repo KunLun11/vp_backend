@@ -107,25 +107,14 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": env.str("DB_ENGINE", "django.db.backends.postgresql"),
-#         "NAME": env.str("DB_NAME", "volley_pro"),
-#         "USER": env.str("DB_USER", "postgres"),
-#         "PASSWORD": env.str("DB_PASSWORD", "postgres"),
-#         "HOST": env.str("DB_HOST", "localhost"),
-#         "PORT": env.str("DB_PORT", "5432"),
-#     }
-# }
-
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "volley_pro",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": env.str("DB_ENGINE", "django.db.backends.postgresql"),
+        "NAME": env.str("DB_NAME", "volley_pro"),
+        "USER": env.str("DB_USER", "postgres"),
+        "PASSWORD": env.str("DB_PASSWORD", "postgres"),
+        "HOST": env.str("DB_HOST", "localhost"),
+        "PORT": env.str("DB_PORT", "5432"),
     }
 }
 
