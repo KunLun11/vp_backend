@@ -32,6 +32,8 @@ class PlayerProfile(BaseProfile):
     completion_percentage = models.IntegerField("Заполненность профиля", default=0)
     total_games = models.IntegerField("Игр сыграно", default=0)
     total_tournament = models.IntegerField("Игр на турнире сыграно", default=0)
+    no_show_count = models.IntegerField("Неявок", default=0)
+    late_cancel_count = models.IntegerField("Поздних отмен", default=0)
 
 
 class CoachProfile(BaseProfile):
@@ -73,3 +75,5 @@ class OrganizerProfile(BaseProfile):
     )
     description = models.TextField("Описание", null=True, blank=True)
     total_games = models.IntegerField("Организовано игр", default=0)
+    organizer_rating = models.IntegerField("Рейтинг организатора", default=1000)
+    games_cancelled = models.IntegerField("Отменено игр", default=0)
