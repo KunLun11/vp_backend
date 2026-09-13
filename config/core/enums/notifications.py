@@ -4,7 +4,6 @@ from django.db import models
 class NotificationType(models.IntegerChoices):
     email = 1, "email"
     push = 2, "push"
-    sms = 3, "sms"
     telegram = 4, "telegram"
 
 

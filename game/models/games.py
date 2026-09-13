@@ -31,6 +31,9 @@ class Game(IDTimeBaseModel):
     duration_minutes = models.IntegerField("Длительность (мин)")
     capacity = models.IntegerField("Вместимость", default=12)
     booked_count = models.IntegerField("Записано", default=0)
+    min_players = models.IntegerField("Минимум игроков", default=10)
+    cancel_reason = models.CharField("Причина отмены", max_length=100, blank=True)
+    cancelled_at = models.DateTimeField("Отменена в", null=True, blank=True)
     price = models.DecimalField(
         "Цена",
         max_digits=10,
@@ -95,6 +98,9 @@ class GameParticipant(IDTimeBaseModel):
     checked_in_at = models.DateTimeField("Дата отметки", null=True, blank=True)
     elo_before = models.IntegerField("ELO до", null=True, blank=True)
     elo_after = models.IntegerField("ELO после", null=True, blank=True)
+    is_paid_marked = models.BooleanField("Оплата подтверждена организатором", default=False)
+    paid_comment = models.CharField("Комментарий к оплате", max_length=255, blank=True)
+    paid_marked_at = models.DateTimeField("Оплата подтверждена в", null=True, blank=True)
 
     def __str__(self):
         return f"{self.player} -> {self.game.title}"
@@ -118,14 +124,7 @@ class GameReview(IDTimeBaseModel):
         related_name="game_reviews",
         verbose_name="Игрок",
     )
-    organizer = models.ForeignKey(
-        "account.OrganizerProfile",
-        on_delete=models.CASCADE,
-        related_name="game_reviews",
-        verbose_name="Организатор",
-    )
     rating_game = models.IntegerField("Рейтинг игры", default=5)
-    rating_organizer = models.IntegerField("Рейтинг организатора", default=5)
     comment = models.TextField("Комментарии", null=True, blank=True)
 
     def __str__(self):
