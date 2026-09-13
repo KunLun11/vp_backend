@@ -48,7 +48,7 @@ class LoginView(APIView):
                 "jti": uuid4().hex,
             },
             settings.SECRET_KEY,
-            algorithm="HS256",
+            settings.JWT_ALGORITHM,
         )
         refresh_token = jwt.encode(
             {
@@ -59,7 +59,7 @@ class LoginView(APIView):
                 "jti": uuid4().hex,
             },
             settings.SECRET_KEY,
-            algorithm="HS256",
+            settings.JWT_ALGORITHM,
         )
         return Response({"access": access_token, "refresh": refresh_token})
 
@@ -79,7 +79,7 @@ class RefreshView(APIView):
         serializer.is_valid(raise_exception=True)
         refresh_token = serializer.validated_data["refresh_token"]
         try:
-            payload = jwt.decode(refresh_token, settings.SECRET_KEY, algorithms=["HS256"])
+            payload = jwt.decode(refresh_token, settings.SECRET_KEY, settings.JWT_ALGORITHM)
         except jwt.ExpiredSignatureError:
             return Response({"detail": "Refresh token expired"}, status=status.HTTP_401_UNAUTHORIZED)
         except jwt.InvalidTokenError:
@@ -106,7 +106,7 @@ class RefreshView(APIView):
                 "jti": uuid4().hex,
             },
             settings.SECRET_KEY,
-            algorithm="HS256",
+            settings.JWT_ALGORITHM,
         )
         new_refresh = jwt.encode(
             {
@@ -117,7 +117,7 @@ class RefreshView(APIView):
                 "jti": uuid4().hex,
             },
             settings.SECRET_KEY,
-            algorithm="HS256",
+            settings.JWT_ALGORITHM,
         )
         BlackListedToken.objects.create(
             jti=jti, expires_at=datetime.fromtimestamp(payload["exp"], tz=timezone.utc), user=user
