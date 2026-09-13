@@ -13,6 +13,7 @@ from account.bl.exceptions import (
     InvalidCredentialsError,
     RateLimitError,
     UniqueEmailError,
+    UniquePhoneError,
 )
 from account.models.codes import EmailConfirmationCode
 from account.models.users import User
@@ -34,8 +35,13 @@ def register_user(data: dict) -> User:
             )
             user.set_password(data["password"])
             user.save()
-        except IntegrityError:
-            raise UniqueEmailError()
+        except IntegrityError as e:
+            msg = str(e).lower()
+            if "email" in msg:
+                raise UniqueEmailError()
+            if "phone" in msg:
+                raise UniquePhoneError()
+            raise
         code = create_verification_code(user=user)
         send_verification_email(email=user.email, code=code)
     return user
