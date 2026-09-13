@@ -4,7 +4,6 @@ from django.db import transaction
 from django.utils import timezone
 
 from account.models.profiles import PlayerProfile
-from chat.bl.chat_service import ChatService
 from config.core.enums.games import GameStatus, ParticipantStatus
 from game.bl.exceptions import (
     AlreadyRegistered,
@@ -73,7 +72,6 @@ class GamePlayerService:
             player=player,
             status=ParticipantStatus.registered,
         )
-        ChatService.add_participant_to_chat(participant)
         game.booked_count += 1
         if game.booked_count >= game.capacity:
             game.status = GameStatus.registration_closed

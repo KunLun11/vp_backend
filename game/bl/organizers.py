@@ -1,7 +1,6 @@
 from django.db import transaction
 
 from account.models.profiles import OrganizerProfile
-from chat.bl.chat_service import ChatService
 from config.core.enums.games import GameStatus
 from etc.models.location import Location
 from game.bl.exceptions import GameNotFound, NotAnOrganizer
@@ -51,7 +50,6 @@ class GameOrganizerService:
             )
         status = data.pop("status", None) or GameStatus.draft
         game = Game.objects.create(organizer=organizer, location=location, status=status, **data)
-        ChatService.create_room_for_game(game)
         return game
 
     @classmethod
