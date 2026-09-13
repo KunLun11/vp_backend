@@ -72,16 +72,16 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Volley Pro API",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    "SECURITY": [
-        {
+    "COMPONENTS": {
+        "securitySchemes": {
             "Bearer": {
                 "type": "http",
                 "scheme": "bearer",
                 "bearerFormat": "JWT",
             }
         }
-    ],
-    "SECURITY_DEFAULT": [{"Bearer": []}],
+    },
+    "SECURITY": [{"Bearer": []}],
 }
 
 JWT_ACCESS_TOKEN_LIFETIME = timedelta(hours=env.float("ACCESS_TOKEN_LIFETIME", 1))
