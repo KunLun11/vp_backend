@@ -49,6 +49,8 @@ class PlayerProfileRetrieveUpdateView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         user_uuid = self.kwargs["user_uuid"]
+        if str(self.request.user.pk) != str(user_uuid):
+            raise PermissionError()
         try:
             return PlayerProfile.objects.select_related("user").get(user__pk=user_uuid)
         except PlayerProfile.DoesNotExist:

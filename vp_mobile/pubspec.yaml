@@ -1,0 +1,66 @@
+name: volley_pro_mobile
+description: Мобильное приложение для сервиса записи на волейбольные игры Volley Pro
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management
+  provider: ^6.1.2
+  
+  # HTTP Client
+  http: ^1.2.1
+  
+  # Local Storage
+  shared_preferences: ^2.2.3
+  flutter_secure_storage: ^9.0.0
+  
+  # Navigation
+  go_router: ^13.2.0
+  
+  # UI & Design
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.10+1
+  cached_network_image: ^3.3.1
+  shimmer: ^3.0.0
+  
+  # Forms & Validation
+  flutter_form_builder: ^9.3.0
+  form_builder_validators: ^9.1.0
+  
+  # Utilities
+  intl: ^0.19.0
+  json_annotation: ^4.8.1
+  equatable: ^2.0.5
+  
+  # Icons
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.8
+  json_serializable: ^6.7.1
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
+  
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Regular.ttf
+        - asset: fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: fonts/Roboto-Bold.ttf
+          weight: 700

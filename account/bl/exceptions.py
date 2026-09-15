@@ -29,3 +29,8 @@ class ProfileNotFound(APIException):
 class ProfileAlreadyExists(APIException):
     status_code = 409
     default_detail = "Профиль уже существует"
+
+
+class UniquePhoneError(APIException):
+    status_code = 409
+    default_detail = "Телефон должен быть уникальным"

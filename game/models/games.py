@@ -57,7 +57,7 @@ class Game(IDTimeBaseModel):
         default=GameStatus.draft,
     )
     elo_rating_change = models.IntegerField(
-        "Иземенение ELO",
+        "Изменение ELO",
         null=True,
         blank=True,
     )
